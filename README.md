@@ -18,5 +18,7 @@ https://docs.google.com/document/d/1AEA6FKI3cO_4iGBO86RdrrF0T0YIS5UZIqIOC8VvYyM/
 ## Project Proposal
 
 **Platform**: Android
+
 **Focus Area**: Motion sensors
+
 **Demo App**: A 2D game where the user tilts their phone to move a ball to the end of a maze.
