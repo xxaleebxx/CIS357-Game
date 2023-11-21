@@ -5,8 +5,12 @@
 - Bryan Soriano
 - Corey Walcott
 
-## Deadline
+## Deadlines
 
 **12/9**: Final project submission (code + tutorial + presentation) is due end-of-day. 
 
-**Exam Week**: View and rate the other project submissions posted on the Blackboard discussion board.  Must be completed by 5pm 12/13.  
+**Exam Week**: View and rate the other project submissions posted on the Blackboard discussion board.  Must be completed by **5pm 12/13**.  
+
+## Project Requirements
+
+https://docs.google.com/document/d/1AEA6FKI3cO_4iGBO86RdrrF0T0YIS5UZIqIOC8VvYyM/edit?usp=sharing
