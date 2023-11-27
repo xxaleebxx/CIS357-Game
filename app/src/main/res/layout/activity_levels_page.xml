@@ -147,7 +147,7 @@
       android:layout_marginEnd="24dp"
       android:numStars="3"
       app:layout_constraintEnd_toStartOf="@+id/ratingBarLevel2"
-      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintHorizontal_bias="0.538"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageLevel1" />
 
