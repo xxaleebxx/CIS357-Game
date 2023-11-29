@@ -19,6 +19,9 @@
             android:name=".LevelActivity"
             android:exported="false" />
         <activity
+            android:name=".TiltMazeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
