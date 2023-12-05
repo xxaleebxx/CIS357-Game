@@ -58,13 +58,13 @@
         android:layout_marginBottom="61dp"
         android:text="00:00"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/play_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/play_button"
         android:layout_width="95dp"
         android:layout_height="48dp"
         android:layout_marginStart="158dp"
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/levels_button"
         android:layout_width="95dp"
         android:layout_height="48dp"
         android:layout_marginStart="161dp"
@@ -86,5 +86,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/play_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
