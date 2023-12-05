@@ -8,7 +8,7 @@
     tools:context=".LevelsPageActivity">
 
   <Button
-      android:id="@+id/MainButton"
+      android:id="@+id/mainmenu_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginTop="32dp"
@@ -26,13 +26,15 @@
       android:layout_marginTop="64dp"
       android:layout_marginEnd="24dp"
       android:background="#FFEB3B"
-      app:layout_constraintEnd_toStartOf="@+id/imageLevel"
+      app:layout_constraintEnd_toStartOf="@+id/imageLevel2"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/number_one"
       tools:srcCompat="@drawable/number_one" />
 
   <RatingBar
       android:id="@+id/ratingBarLevel6"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="46dp"
       android:layout_marginEnd="48dp"
@@ -49,19 +51,21 @@
       android:background="#FFEB3B"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/ratingBarLevel4"
+      app:srcCompat="@android:drawable/ic_lock_lock"
       tools:srcCompat="@android:drawable/ic_lock_lock" />
 
   <RatingBar
       android:id="@+id/ratingBarLevel2"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="46dp"
       android:layout_marginEnd="48dp"
       android:numStars="3"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/imageLevel" />
+      app:layout_constraintTop_toBottomOf="@+id/imageLevel2" />
 
   <ImageView
-      android:id="@+id/imageLevel"
+      android:id="@+id/imageLevel2"
       android:layout_width="143dp"
       android:layout_height="115dp"
       android:layout_marginTop="64dp"
@@ -69,10 +73,12 @@
       android:background="#FFEB3B"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@android:drawable/ic_lock_lock"
       tools:srcCompat="@android:drawable/ic_lock_lock" />
 
   <RatingBar
       android:id="@+id/ratingBarLevel4"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="46dp"
       android:layout_marginEnd="48dp"
@@ -82,6 +88,7 @@
 
   <ImageView
       android:id="@+id/imageLevel3"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="115dp"
       android:layout_marginStart="48dp"
@@ -91,10 +98,12 @@
       app:layout_constraintEnd_toStartOf="@+id/imageLevel4"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/ratingBarLevel1"
+      app:srcCompat="@android:drawable/ic_lock_lock"
       tools:srcCompat="@android:drawable/ic_lock_lock" />
 
   <ImageView
       android:id="@+id/imageLevel4"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="115dp"
       android:layout_marginTop="16dp"
@@ -102,10 +111,12 @@
       android:background="#FFEB3B"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/ratingBarLevel2"
+      app:srcCompat="@android:drawable/ic_lock_lock"
       tools:srcCompat="@android:drawable/ic_lock_lock" />
 
   <RatingBar
       android:id="@+id/ratingBarLevel5"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="46dp"
       android:layout_marginStart="48dp"
@@ -117,6 +128,7 @@
 
   <ImageView
       android:id="@+id/imageLevel5"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="115dp"
       android:layout_marginStart="48dp"
@@ -126,10 +138,12 @@
       app:layout_constraintEnd_toStartOf="@+id/imageLevel6"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/ratingBarLevel3"
+      app:srcCompat="@android:drawable/ic_lock_lock"
       tools:srcCompat="@android:drawable/ic_lock_lock" />
 
   <RatingBar
       android:id="@+id/ratingBarLevel3"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="46dp"
       android:layout_marginStart="48dp"
@@ -141,6 +155,7 @@
 
   <RatingBar
       android:id="@+id/ratingBarLevel1"
+      android:isIndicator="true"
       android:layout_width="143dp"
       android:layout_height="46dp"
       android:layout_marginStart="48dp"
@@ -150,5 +165,19 @@
       app:layout_constraintHorizontal_bias="0.538"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageLevel1" />
+
+  <ImageButton
+      android:id="@+id/levelOne_button"
+      android:layout_width="133dp"
+      android:layout_height="167dp"
+      android:layout_marginStart="48dp"
+      android:layout_marginTop="60dp"
+      android:layout_marginEnd="24dp"
+      android:background="#23FFFFFF"
+      android:contentDescription="levelOne_button"
+      app:layout_constraintBottom_toTopOf="@+id/imageLevel3"
+      app:layout_constraintEnd_toStartOf="@+id/imageLevel2"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

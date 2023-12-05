@@ -17,7 +17,7 @@
         android:text="Maze"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="60sp"
-        app:layout_anchor="@+id/MainPlay"
+        app:layout_anchor="@+id/MainPlay_button"
         app:layout_anchorGravity="bottom|center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/tilt" />
 
     <Button
-        android:id="@+id/MainPlay"
+        android:id="@+id/MainPlay_button"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
