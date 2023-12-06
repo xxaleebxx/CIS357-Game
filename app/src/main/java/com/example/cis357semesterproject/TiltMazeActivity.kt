@@ -380,8 +380,8 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
                     // Check if values array is not null and has at least one element
 
                     if (event.values?.isNotEmpty() == true) {
-                        val angularSpeedX = event.values[0]
-                        val angularSpeedY = event.values[1]
+                        val angularSpeedX = event.values[1]
+                        val angularSpeedY = event.values[0]
 
                         // Customize player movement based on gyroscope data
                         // Example: Adjust player position based on angular speed
