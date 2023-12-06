@@ -37,6 +37,10 @@ class MazeView(context: Context) : View(context), SensorEventListener {
     private lateinit var ballBitmap: Bitmap
     private var ballX = 700f
     private var ballY = 50f
+    private var cellWidth = width / 10f
+    private var cellHeight = height / 20f
+
+
 
     private val sensorManager: SensorManager =
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -46,6 +50,24 @@ class MazeView(context: Context) : View(context), SensorEventListener {
     init {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         ballBitmap = BitmapFactory.decodeResource(resources, R.drawable.ball3)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        cellWidth = w / 10f
+        cellHeight = h / 20f
+    }
+
+    private fun isSolidBlock(x: Float, y: Float): Boolean {
+        val gridX = (x / cellWidth).toInt()
+        val gridY = (y / cellHeight).toInt()
+
+        // Boundary check to avoid ArrayIndexOutOfBoundsException
+        if (gridX < 0 || gridY < 0 || gridX >= mazeArray[0].size || gridY >= mazeArray.size) {
+            return false
+        }
+
+        return mazeArray[gridY][gridX] == 2
     }
 
     override fun onSensorChanged(event: SensorEvent) {
@@ -58,15 +80,31 @@ class MazeView(context: Context) : View(context), SensorEventListener {
             ballX -= xAcceleration
             ballY += yAcceleration
 
-            // Ensure the ball stays within the screen bounds
-            if (ballX < 0) ballX = 0f
-            if (ballX > width - ballBitmap.width) ballX = (width - ballBitmap.width).toFloat()
-            if (ballY < 0) ballY = 0f
-            if (ballY > height - ballBitmap.height) ballY = (height - ballBitmap.height).toFloat()
+            // collision variables
+            val newX = ballX - xAcceleration
+            val newY = ballY + yAcceleration
+
+            //check for collision
+            if(isSolidBlock(newX, newY)){
+                ballX = newX
+                ballY = newY
+            }
+
+            adjustBallPosition()
 
             // Redraw the view to update the ball's position
             invalidate()
         }
+    }
+
+    private fun adjustBallPosition(){
+        // Adjust ball position to prevent it from going off-screen or into solid blocks
+        if (ballX < 0 || isSolidBlock(ballX, ballY)) ballX = 0f
+        if (ballX > width - ballBitmap.width || isSolidBlock(ballX, ballY))
+        ballX = (width - ballBitmap.width).toFloat()
+        if (ballY < 0 || isSolidBlock(ballX, ballY)) ballY = 0f
+        if (ballY > height - ballBitmap.height || isSolidBlock(ballX, ballY))
+        ballY = (height - ballBitmap.height).toFloat()
     }
 
     override fun onDetachedFromWindow() {
@@ -89,7 +127,7 @@ class MazeView(context: Context) : View(context), SensorEventListener {
 
 
     private val mazeArray: Array<IntArray> = arrayOf(
-        intArrayOf(0, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+        intArrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
         intArrayOf(2, 2, 2, 2, 2, 2, 1, 1, 2, 2),
         intArrayOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1), // empty row for ball to roll
         intArrayOf(2, 1, 2, 2, 2, 2, 2, 2, 2, 2),
@@ -115,8 +153,10 @@ class MazeView(context: Context) : View(context), SensorEventListener {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         super.onDraw(canvas)
+
         val cellWidth = width / 10f
         val cellHeight = height / 20f
+
 
         for (i in mazeArray.indices) {
             for (j in mazeArray[i].indices) {
