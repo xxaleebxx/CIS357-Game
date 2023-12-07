@@ -35,11 +35,12 @@ class MazeActivity : AppCompatActivity() {
 
 class MazeView(context: Context) : View(context), SensorEventListener {
 
-    private val gravity = 9.8f
+    private val gravity = 19.2f
 
     private lateinit var ballBitmap: Bitmap
     private var ballX = 700f
     private var ballY = 50f
+    private var ballZ = 0f
     private var cellWidth = width / 10f
     private var cellHeight = height / 20f
 
@@ -61,7 +62,7 @@ class MazeView(context: Context) : View(context), SensorEventListener {
         cellHeight = h / 20f
     }
 
-    private fun isSolidBlock(x: Float, y: Float): Boolean {
+    private fun isSolidBlock(x: Float, y: Float, z: Float): Boolean {
         val gridX = (x / cellWidth).toInt()
         val gridY = (y / cellHeight).toInt()
 
@@ -78,21 +79,24 @@ class MazeView(context: Context) : View(context), SensorEventListener {
             // Simulate constant downward acceleration
             val xAcceleration = event.values[0]
             val yAcceleration = gravity
+            val zAcceleration = event.values[2]
 
             // Update ball position based on constant acceleration
-            ballX -= xAcceleration
-            ballY += yAcceleration
+            ballX += yAcceleration
+            ballY += xAcceleration * 0.1f
+            ballZ += zAcceleration * 0.1f
 
             // Store the new position before applying collision logic
             val newX = ballX
             val newY = ballY
+            val newZ = ballZ
 
             // Check for collision with solid block
-            if (!isSolidBlock(newX, newY)) {
+            if (!isSolidBlock(newX, newY, newZ)) {
                 // No collision, update ball position
                 ballX = newX
                 ballY = newY
-
+                ballZ = newZ
                 // Adjust ball position to prevent it from going off-screen
                 adjustBallPosition()
             }
