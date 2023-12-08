@@ -43,6 +43,7 @@ class MazeView(context: Context) : View(context), SensorEventListener {
     private var ballZ = 0f
     private var cellWidth = width / 10f
     private var cellHeight = height / 20f
+    private val GYROSCOPE_SENSITIVITY = 30f //was 0.1f, pushed to 30f to see how sensitive it was
 
 
 
@@ -50,8 +51,13 @@ class MazeView(context: Context) : View(context), SensorEventListener {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val accelerometer: Sensor? =
         sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    private val gyroscope: Sensor? =
+        sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) //Gyroscope object
+
+
 
     init {
+        sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         ballBitmap = BitmapFactory.decodeResource(resources, R.drawable.ball4)
     }
@@ -75,16 +81,16 @@ class MazeView(context: Context) : View(context), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            // Simulate constant downward acceleration
-            val xAcceleration = event.values[0]
+        if (event.sensor.type == Sensor.TYPE_GYROSCOPE) {
+            // Gyroscope logic
+            val roll = event.values[2] // Roll in radians
             val yAcceleration = gravity
-            val zAcceleration = event.values[2]
 
-            // Update ball position based on constant acceleration
-            ballX += yAcceleration
-            ballY += xAcceleration * 0.1f
-            ballZ += zAcceleration * 0.1f
+
+            // Adjust ball position based on gyroscope values
+            ballX += roll * GYROSCOPE_SENSITIVITY
+
+            ballY += yAcceleration
 
             // Store the new position before applying collision logic
             val newX = ballX
@@ -97,6 +103,7 @@ class MazeView(context: Context) : View(context), SensorEventListener {
                 ballX = newX
                 ballY = newY
                 ballZ = newZ
+
                 // Adjust ball position to prevent it from going off-screen
                 adjustBallPosition()
             }
@@ -104,6 +111,7 @@ class MazeView(context: Context) : View(context), SensorEventListener {
             // Redraw the view to update the ball's position
             invalidate()
         }
+
     }
 
 
@@ -122,7 +130,15 @@ class MazeView(context: Context) : View(context), SensorEventListener {
         if (ballY > height - ballBitmap.height) {
             ballY = (height - ballBitmap.height).toFloat()
         }
+
+        // Optionally, adjust for negative z-values
+        if (ballZ < 0) {
+            ballZ = 0f
+        }
+        // Adjust this condition based on your application's requirements
+        // For example, you might want to set a minimum limit for negative z-values
     }
+
 
 
 
