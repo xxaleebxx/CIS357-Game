@@ -24,7 +24,7 @@ class LevelActivity : AppCompatActivity() {
         val   playButton  = findViewById<Button>(R.id.play_button)
 
         playButton.setOnClickListener {
-            val playIntent = Intent(this@LevelActivity, MazeActivity::class.java)
+            val playIntent = Intent(this@LevelActivity, TiltMazeActivity::class.java)
             levelOneStarted = true
             startActivity(playIntent)
         }
