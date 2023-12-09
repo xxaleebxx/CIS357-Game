@@ -18,6 +18,7 @@ import android.view.View
 import java.security.SecureRandom
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 
 enum class Direction {
@@ -62,6 +63,7 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
         // Implement your sensor handling logic here
         // You can leave it empty if you don't need to handle sensor changes in the activity
     }
+
 
     // Register and unregister sensors in onResume and onPause methods
     override fun onResume() {
@@ -127,11 +129,11 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
 
                     // Customize player movement based on gyroscope data
                     // Example: Adjust player position based on angular speed
-                    if (angularSpeedX > 2.0f) movePlayer(Direction.RIGHT)
-                    else if (angularSpeedX < -2.0f) movePlayer(Direction.LEFT)
+                    if (angularSpeedX > 10f) movePlayer(Direction.RIGHT)
+                    else if (angularSpeedX < -10f) movePlayer(Direction.LEFT)
 
-                    if (angularSpeedY > 2.0f) movePlayer(Direction.DOWN)
-                    else if (angularSpeedY < -2.0f) movePlayer(Direction.UP)
+                    if (angularSpeedY > 10f) movePlayer(Direction.DOWN)
+                    else if (angularSpeedY < -10f) movePlayer(Direction.UP)
                 }
             }
         }
@@ -278,6 +280,8 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
 
             val margin = cellSize / 10
 
+            //player rectangle
+
             canvas.drawRect(
                 player.column * cellSize + margin,
                 player.row * cellSize + margin,
@@ -285,6 +289,8 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
                 (player.row + 1) * cellSize - margin,
                 playerPaint
             )
+
+            //exit rectangle
 
             canvas.drawRect(
                 exit.column * cellSize + margin,
@@ -308,8 +314,8 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
                 val dx = x - playerCenterX
                 val dy = y - playerCenterY
 
-                val absDx = Math.abs(dx)
-                val absDy = Math.abs(dy)
+                val absDx = abs(dx)
+                val absDy = abs(dy)
 
                 if (absDx > cellSize || absDy > cellSize) {
                     if (absDx > absDy) {
@@ -425,6 +431,8 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
             Log.d(TAG, "Sensor accuracy changed: $accuracy for sensor: $sensor")
             //TODO("Not yet implemented")
         }
+
+
     }
 
 }
