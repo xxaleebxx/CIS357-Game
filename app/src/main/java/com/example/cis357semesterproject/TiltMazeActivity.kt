@@ -15,6 +15,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.navigation.findNavController
 import java.security.SecureRandom
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,26 +47,15 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
         gameView = GameView(this, null)
         setContentView(gameView)
     }
-
-    /*
-        for the sake of attempting to get this to chooch (11/26)
-        i'm leaving onAccuracyChanged and onSensorChanged blank here
-        this was suggested because there are already some logic made in the
-        GameView class down below, not sure what we'd implement up here.
-
-        Corey
-     */
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        // Handle accuracy changes if needed
+        //left empty to satisfy sensor logic
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        // Implement your sensor handling logic here
-        // You can leave it empty if you don't need to handle sensor changes in the activity
+        //left empty to satisfy sensor logic
     }
 
-
-    // Register and unregister sensors in onResume and onPause methods
+    //register and deregister sensors when onPause is active and onResume is active.
     override fun onResume() {
         super.onResume()
         accelerometer?.let { sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME) }
@@ -81,6 +71,8 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
         private var COLUMNS = 5
         private var ROWS = 5
         private var cells: Array<Array<Cell>> = arrayOf()
+
+        private var isGameFinished = false
 
         private lateinit var player: Cell
         private lateinit var exit: Cell
@@ -299,6 +291,17 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
                 (exit.row + 1) * cellSize - margin,
                 exitPaint
             )
+
+            if (isGameFinished) {
+                // Display a message or alert the user that the maze is completed
+                val paint = Paint().apply {
+                    color = Color.BLACK
+                    textSize = 40f
+                }
+                canvas.drawText("Maze Completed!", width / 4f, height / 2f, paint)
+
+                findNavController().navigate(R.id.levelActivity2)
+            }
         }
 
         override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -349,9 +352,9 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
 
         private fun checkExit() {
             if (player == exit) {
-                COLUMNS++
-                ROWS++
-                createMaze()
+                isGameFinished = true
+
+
             }
         }
 
@@ -363,18 +366,6 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
             var visited = false
         }
 
-        /*
-        onSensorChanged had issues with SensorEvent(?), I took out the question mark, but that insinuates
-        that the sensor will NEVER be null, which in our case would throw a NULLPOINTEREXCEPTION.
-
-        we don't want that, so I'm suggesting we implement some sort of if-null catching cases and
-        hopefully fixing it later.
-
-        I initialized some logs to give us some input onto what was breaking and how, we can implement
-        what the code does later at this point
-
-        COREY
-        */
         override fun onSensorChanged(event: SensorEvent) {
 
             if (event != null) {
@@ -397,39 +388,23 @@ class TiltMazeActivity : AppCompatActivity(), SensorEventListener {
                         if (angularSpeedY > 2.0f) movePlayer(Direction.DOWN)
                         else if (angularSpeedY < -2.0f) movePlayer(Direction.UP)
                     } else {
-                        // Handle the case when values array is null or empty
-                        // Example: Log a warning or set default values
+
                         Log.w("SensorEvent", "Values array is null or empty")
 
-                        // Set default values or take appropriate action
-                        // For example:
-                        // val defaultAngularSpeedX = 0.0f
-                        // val defaultAngularSpeedY = 0.0f
-                        // movePlayer(Direction.STOP) // Stop player movement or set default direction TODO
                     }
                 } else {
-                    // Handle the case when the sensor in the event is not the gyroscope sensor
-                    // Example: Log a warning or take appropriate action
+
                     Log.w("SensorEvent", "Event is not from the gyroscope sensor")
 
-                    // Take appropriate action
-                    // For example:
-                    // ignore the event or stop processing TODO
                 }
             } else {
-                // Handle the case when the event is null
-                // Example: Log a warning or take appropriate action
-                Log.w("SensorEvent", "Received a null SensorEvent")
 
-                // Take appropriate action
-                // For example:
-                // ignore the event or stop processing TODO
+                Log.w("SensorEvent", "Received a null SensorEvent")
             }
 
         }
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
             Log.d(TAG, "Sensor accuracy changed: $accuracy for sensor: $sensor")
-            //TODO("Not yet implemented")
         }
 
 
